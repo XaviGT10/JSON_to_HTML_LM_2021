@@ -1,176 +1,163 @@
+//CONTINENTE
+
 function cargaAJAX() {
-    console.log("En la función");
+    console.log("En la función cargaAjax");
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
 
             console.log("RESPUESTA RECIBIDA");
-            console.log(xhttp.responseText);
-            var dibujos = JSON.parse(xhttp.responseText);
+            //console.log(xhttp.responseText);
+            var obj = JSON.parse(xhttp.responseText);
 
-            pintarDatos(dibujos);
+            selectorContinente(obj);
 
         } else if (this.readyState == 4 && this.status == 404) {
             alert("la ruta ${ruta} es erronea, compruébala");
         }
     };
-    var ruta = "http://localhost/Xavi/LM_UD3_A05_CVJSON_to_HTML/Servidor/GironXavier.json";
+    var ruta = "http://localhost/Xavi/servidor/world.php";
     xhttp.open("GET", ruta, true);
     xhttp.send();
 }
 
-function pintarDatos(data) {
 
 
-    console.log("Funcion2");
-    const educacion = data.educacion_formacion;
+function selectorContinente(conti) {
+    let selectorC = document.getElementById("selectorC");
+    console.log(selectorC.value);
 
-   
-    let listaEducacion= document.getElementById("educa2");
-    let resultEducacion = document.getElementById("educa2");
-    let tituloEstudios = document.createElement("h2");
-    tituloEstudios.innerHTML = "Estudios";
-    listaEducacion.append(tituloEstudios);
+    for (let i = 0; i < conti.length; i++) {
 
-    for (let i = 0; i < educacion.length; i++) {
-        const educacion = data.educacion_formacion[i];
-        console.log(educacion);
-
-        
-
-        let listaEducacion_li = document.createElement("h2");
-        listaEducacion_li.innerHTML = educacion.nivel;
-
-        
-       
-        //ELEMENTO SECTION
-        let articleEducacion = document.createElement("h4");
-        articleEducacion.setAttribute("class", "capaEducacion");
-        articleEducacion.setAttribute("id", educacion.nivel)
-        articleEducacion.innerHTML = educacion.centro;
-
-        let aEstudios = document.createElement("h4");
-        aEstudios.innerHTML = educacion.duración;
-        
-        
-        listaEducacion.append(listaEducacion_li);
-        listaEducacion_li.append(articleEducacion);
-        articleEducacion.append(aEstudios);
-        resultEducacion.append(articleEducacion);
-        articleEducacion.append(aEstudios);
-
+        let nombreC = conti[i].nombre;
+        let optionC = document.createElement("option");
+        let textC = document.createTextNode(nombreC);
+        optionC.appendChild(textC);
+        selectorC.appendChild(optionC);
     }
+}
+///PAIS
 
+function cargarAjax2() {
+    console.log("En la función cargaAjax 2");
+    var xhttp = new XMLHttpRequest();
 
-    const idiomas = data.competencias_e_idiomas;
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
 
-   
-    let listaIdiomas= document.getElementById("idiomas");
-    let resultIdiomas = document.getElementById("idiomas");
+            console.log("RESPUESTA RECIBIDA");
+            //console.log(xhttp.responseText);
+            var obj = JSON.parse(xhttp.responseText);
+            selectorPais(obj);
 
+        } else if (this.readyState == 4 && this.status == 404) {
+            alert("la ruta ${ruta} es erronea, compruébala");
+        }
+    };
+    let pais1 = document.getElementById("selectorC").value;
+    var ruta2 = "http://localhost/Xavi/servidor/world.php?continente=" + pais1;
+    xhttp.open("GET", ruta2, true);
+    xhttp.send();
+}
+function selectorPais(pais) {
+    let eleccionPais = document.getElementById("selectorC").value;
+    let selectorP = document.getElementById("selectorP");
+    console.log(selectorP);
+    console.log(eleccionPais + " desde selectorPais");
 
-    for (let e = 0; e < idiomas.length; e++) {
-        const idiomas = data.competencias_e_idiomas[e];
-        console.log(idiomas);
+    for (let x = 0; x < pais.length; x++) {
 
-        let tituloIdiomas = document.createElement("h2");
-        tituloIdiomas.innerHTML = "IDIOMAS";
-        let listaIdiomas_li = document.createElement("h4");
-        listaIdiomas_li.innerHTML = idiomas.lengua_materna_1;
-        let listaIdiomas_li2 = document.createElement("h4");
-        listaIdiomas_li2.innerHTML = idiomas.lengua_materna_2;
+        let generalP = pais[x];
+        let nombreP = generalP.nombre;
+        let codigoP = generalP.codigo;
+        let optionP = document.createElement("option");
+        optionP.setAttribute("value", generalP.codigo)
+        let textoP = document.createTextNode(nombreP);
 
-        let articleEducacion = document.createElement("h4");
-        articleEducacion.setAttribute("class", "capaEducacion");
-        articleEducacion.innerHTML = idiomas.otros_idiomas_adquiridos;
-
-        let aIdiomas = document.createElement("h4");
-        aIdiomas.innerHTML = idiomas.nivel_en_idiomas_adquiridos;
-        
-        listaIdiomas.append(tituloIdiomas);
-        listaIdiomas.append(listaIdiomas_li);
-        listaIdiomas.append(listaIdiomas_li2);
-        listaIdiomas_li.append(articleEducacion);
-        articleEducacion.append(aIdiomas);
-        resultIdiomas.append(articleEducacion);
-        articleEducacion.append(aIdiomas);
-
+        selectorP.appendChild(optionP);
+        optionP.appendChild(textoP);
     }
+}
+///CIUDAD
 
+function cargarAjax3() {
+    console.log("En la función cargaAjax 3");
+    var xhttp = new XMLHttpRequest();
 
-    const competencias = data.competencias_digitales;
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
 
-   
-    let listaCompetencias= document.getElementById("CDigitales");
+            console.log("RESPUESTA RECIBIDA");
+            //console.log(xhttp.responseText);
+            var obj = JSON.parse(xhttp.responseText);
 
-    for (let v = 0; v < competencias.length; v++) {
-        const competencias = data.competencias_digitales[v];
-        console.log(competencias);
+            selectorCiudad(obj);
 
-        let tituloIdiomas = document.createElement("h2");
-        tituloIdiomas.innerHTML = "COMPETENCIAS DIGITALES";
-        let listaIdiomas_li = document.createElement("h4");
-        listaIdiomas_li.innerHTML = competencias.lenguajes;
-        
-        listaCompetencias.append(tituloIdiomas);
-        listaCompetencias.append(listaIdiomas_li);
+        } else if (this.readyState == 4 && this.status == 404) {
+            alert("la ruta ${ruta} es erronea, compruébala");
+        }
+    };
+    let y = document.getElementById("selectorP").value;
+    console.log(y);
 
+    var ruta3 = "http://localhost/Xavi/servidor/world.php?pais=" + y;
+    xhttp.open("GET", ruta3, true);
+    xhttp.send();
+}
+
+function selectorCiudad(ciudad) {
+    let selectorP = document.getElementById("selectorP").value;
+    let selectorCi = document.getElementById("selectCi");
+    console.log(ciudad);
+    let count = 1;
+    for (let z = 0; z < ciudad.length; z++) {
+        let nombreCi = ciudad[z].nombre;
+        console.log("dentro del bucle ciudad");
+
+        let optionCi = document.createElement("option");
+        optionCi.setAttribute("id", count);
+        let textoCi = document.createTextNode(nombreCi);
+
+        selectorCi.appendChild(optionCi);
+        optionCi.appendChild(textoCi);
+        count++;
     }
+    let emptyOption = document.createElement("option");
+    let textoCi2 = document.createTextNode("");
+    selectorCi.appendChild(emptyOption);
+    emptyOption.appendChild(textoCi2);
+}
 
-    const permisos = data.permiso_conduccion;
+function cargarAjax4() {
+    console.log("En la función cargaAjax 3");
+    var xhttp = new XMLHttpRequest();
 
-   
-    let listaPermisos= document.getElementById("permisos");
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
 
-    for (let d = 0; d < permisos.length; d++) {
-        const permisos = data.permiso_conduccion[d];
-        console.log(permisos);
+            console.log("RESPUESTA RECIBIDA");
+            //console.log(xhttp.responseText);
+            var obj = JSON.parse(xhttp.responseText);
 
-        let tituloIdiomas = document.createElement("h2");
-        tituloIdiomas.innerHTML = "PERMISOS CIRCULACIÓN";
-        let listaIdiomas_li = document.createElement("h4");
-        listaIdiomas_li.innerHTML = permisos.licencias;
-        
-        listaPermisos.append(tituloIdiomas);
-        listaPermisos.append(listaIdiomas_li);
+            imprimirCiudad(obj);
 
-    }
+        } else if (this.readyState == 4 && this.status == 404) {
+            alert("la ruta ${ruta} es erronea, compruébala");
+        }
+    };
+    let y = document.getElementById("selectCi").value;
+    console.log(y);
 
-
-
-    const infoAdicional = data.informacion_adicional;
-
-   
-    let listaInfo= document.getElementById("infoAdicional");
-    let resultInfo = document.getElementById("infoAdicional");
-
-
-    for (let p = 0; p < infoAdicional.length; p++) {
-        const infoAdicional = data.informacion_adicional[p];
-        console.log(infoAdicional);
-
-        let tituloIdiomas = document.createElement("h2");
-        tituloIdiomas.innerHTML = "INFO ADICIONAL";
-        let listaIdiomas_li = document.createElement("h4");
-        listaIdiomas_li.innerHTML = infoAdicional.disponibilidad_trabajo;
-        let listaIdiomas_li2 = document.createElement("h4");
-        listaIdiomas_li2.innerHTML = infoAdicional.disponibilidad_vehiculo;
-
-        let articleEducacion = document.createElement("h4");
-        articleEducacion.setAttribute("class", "capaEducacion");
-        articleEducacion.innerHTML = infoAdicional.experiencia_laboral;
-
-        let aIdiomas = document.createElement("h4");
-        aIdiomas.innerHTML = infoAdicional.duracion;
-        
-        listaInfo.append(tituloIdiomas);
-        listaInfo.append(listaIdiomas_li);
-        listaInfo.append(listaIdiomas_li2);
-        listaIdiomas_li.append(articleEducacion);
-        articleEducacion.append(aIdiomas);
-        resultInfo.append(articleEducacion);
-        articleEducacion.append(aIdiomas);
-
-    }
+    var ruta4 = "http://localhost/Xavi/servidor/world.php?pais=" + y;
+    console.log(ruta4);
+    xhttp.open("GET", ruta4, true);
+    xhttp.send();
+}
+function imprimirCiudad(ciudad) {
+    let aux = document.getElementById("result");
+    let aux2 = document.getElementById("selectCi").value;
+    console.log(aux2);
+    let text4 = document.createTextNode(aux2);
+    aux.appendChild(text4);
 }
